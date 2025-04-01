@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>To-Do List</title>
+        <style>
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 98vh;
+                background-image: linear-gradient(45deg, rgb(0, 174, 255), rgb(0, 132, 255));
+                font-family: Helvetica;
+            }
+
+            #app {
+                display: flex;
+                flex-direction: column;
+                background-color: #ffffff;
+                padding: 18px;
+                border-radius: 12px;
+                box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.1);
+                width: 500px;
+                height: 400px;
+                overflow-y: auto;
+                gap: 20px;
+            }
+
+            #app > h1 {
+                margin: 0;
+                font-weight: normal;
+                font-size: 24px;
+                color: rgb(0, 174, 255);
+            }
+
+            .add-todo {
+                display: flex;
+                width: 100%;
+                background-color: #eeeeee;
+                border-radius: 18px;
+                box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+            }
+
+            .add-todo > input {
+                flex-grow: 5;
+                padding: 8px;
+                border-radius: 18px 0 0 18px;
+                border: 0;
+                background-color: #eeeeee;
+                outline: none;
+                font-size: 16px;
+                text-align: center;
+            }
+
+            .add-todo > button {
+                flex-grow: 1;
+                padding: 8px;
+                border-radius: 18px;
+                border: 0;
+                background-color: #08a0ff;
+                font-size: 16px;
+                color: #ffffff;
+                transition-duration: 200ms;
+            }
+
+            .add-todo > button:hover {
+                background-color: #0d84cf;
+                cursor: pointer;
+            }
+
+            #todo-list {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .todo {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 5px;
+                border-radius: 8px;
+                transition-duration: 200ms;
+            }
+
+            .todo:nth-child(odd) {
+                background-color: #5cc1f0;
+            }
+
+            .todo:nth-child(odd) > button {
+                background-color: #23a7e4;
+            }
+
+            .todo:nth-child(odd) > button:hover {
+                background-color: #1299d8;
+            }
+
+            .todo:nth-child(even) {
+                background-color: #9cddfc;
+            }
+
+            .todo:nth-child(even) > button {
+                background-color: #75ccf5;
+            }
+
+            .todo:nth-child(even) > button:hover {
+                background-color: #57beee;
+            }
+
+            .todo > button > img {
+                width: auto;
+                height: 16px;
+            }
+
+            .todo > button {
+                width: 30px;
+                height: 30px;
+                border-radius: 8px;
+                border: none;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-left: auto;
+                transition-duration: 200ms;
+            }
+
+            .todo > button:hover {
+                cursor: pointer;
+            }
+
+            .todo > input:checked ~ span {
+                color: rgb(100, 100, 100);
+                text-decoration: line-through;
+            }
+
+            .todo:has(input:checked) {
+                background-color: rgb(201, 201, 201);
+            }
+
+            .todo:has(input:checked) > button {
+                background-color: rgb(148, 148, 148);
+            }
+
+            .todo:has(input:checked) > button:hover {
+                background-color: rgb(134, 134, 134);
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <h1>To-Do List</h1>
+            <div class="add-todo">
+                <input placeholder="New To-Do" id="add-todo-input" type="text">
+                <button id="add-todo-btn">Add</button>
+            </div>
+            <div id="todo-list">
+                
+            </div>
+        </div>
+
+        <script>
+            // console.log(document.getElementById("add-todo-btn"))
+            // console.log(document.getElementsByClassName("add-todo-btn"))
+            // console.log(document.getElementsByTagName("div"))
+
+            // console.log(document.querySelector("#add-todo-btn"))
+            // console.log(document.querySelector(".add-todo-btn"))
+            // console.log(document.querySelectorAll(".add-todo-btn"))
+            // console.log(document.querySelectorAll(".add-todo-btn")[0])
+
+            let add_todo_btn = document.getElementById("add-todo-btn")
+            let add_todo_input = document.getElementById("add-todo-input")
+            let todo_list = document.getElementById("todo-list")
+
+            add_todo_btn.addEventListener("click", () => {
+                let todo_content = add_todo_input.value
+
+                if (!todo_content) {
+                    alert("The To-Do content cannot be empty")
+                    return
+                }
+
+                let todo = document.createElement("div")
+                todo.classList.add("todo")
+
+                let input = document.createElement("input")
+                input.setAttribute("type", "checkbox")
+
+                let span = document.createElement("span")
+                span.innerHTML = todo_content
+
+                let btn = document.createElement("button")
+
+                btn.addEventListener("click", () => {
+                    todo_list.removeChild(todo)
+                })
+
+                let img = document.createElement("img")
+                img.setAttribute("src", "delete.png")
+
+                btn.appendChild(img)
+                todo.appendChild(input)
+                todo.appendChild(span)
+                todo.appendChild(btn)
+
+                todo_list.appendChild(todo)
+
+                add_todo_input.value = ""
+            })
+        </script>
+    </body>
+</html>
